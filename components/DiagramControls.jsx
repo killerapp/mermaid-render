@@ -15,6 +15,8 @@ const DiagramControls = ({
   isLeftPanelCollapsed,
   leftPanelWidth,
 }) => {
+  const diagramsWithoutFontSize = ['sequence', 'state', 'er', 'journey'];
+
   const fonts = [
     { name: 'Arial', value: 'arial' },
     { name: 'Helvetica', value: 'helvetica' },
@@ -55,14 +57,23 @@ const DiagramControls = ({
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Font Size (px)</label>
+            <label className={`block text-sm font-medium mb-1 ${diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type)) ? 'text-gray-400' : ''}`}>
+              Font Size (px)
+              <span
+                className="ml-1 cursor-help"
+                title="Sometimes the font size doesn't work as expected. This is due to limitations in Mermaid's rendering engine. If you encounter issues, try adjusting other settings or refreshing the diagram."
+              >
+                ❓
+              </span>
+            </label>
             <input
               type="number"
               value={fontSize}
               onChange={(e) => setFontSize(Number(e.target.value))}
               min="8"
               max="30"
-              className="w-full p-1 border rounded text-sm"
+              className={`w-full p-1 border rounded text-sm ${diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type)) ? 'bg-gray-200 cursor-not-allowed' : ''}`}
+              disabled={diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type))}
             />
           </div>
           <div>
