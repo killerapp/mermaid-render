@@ -106,7 +106,7 @@ const MermaidRenderer = () => {
       </main>
 
       <footer className="bg-gray-200 p-4 text-center">
-        <p>&copy; 2024 Mermaid Diagram Renderer. All rights reserved.</p>
+        <p>&copy; 2024 Agentic Insights, LLC. All rights reserved.</p>
       </footer>
     </div>
   );
