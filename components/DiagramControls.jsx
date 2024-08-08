@@ -188,9 +188,6 @@ const DiagramControls = ({
             ))}
           </ul>
         </div>
-        <p className="mt-2 text-xs">
-          <span className="font-medium">Mermaid Version:</span> {mermaidVersion}
-        </p>
       </div>
     </div>
   );
