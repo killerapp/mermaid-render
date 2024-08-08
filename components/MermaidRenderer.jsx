@@ -17,9 +17,9 @@ const MermaidRenderer = () => {
 
   const handleDownload = async (format) => {
     try {
-      const svgElement = document.querySelector('.mermaid svg');
+      const svgElement = document.querySelector('#mermaid-diagram svg');
       if (!svgElement) {
-        throw new Error('SVG element not found');
+        throw new Error('SVG element not found. Please ensure the diagram is rendered correctly.');
       }
 
       const svgData = new XMLSerializer().serializeToString(svgElement);
@@ -36,8 +36,15 @@ const MermaidRenderer = () => {
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0);
           canvas.toBlob((blob) => {
-            downloadBlob(blob, 'mermaid-diagram.png');
+            if (blob) {
+              downloadBlob(blob, 'mermaid-diagram.png');
+            } else {
+              throw new Error('Failed to create PNG blob');
+            }
           }, 'image/png');
+        };
+        img.onerror = () => {
+          throw new Error('Failed to load SVG as image');
         };
         img.src = URL.createObjectURL(svgBlob);
       }

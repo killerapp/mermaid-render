@@ -56,7 +56,7 @@ const DiagramRenderer = ({ diagram, theme, fontSize, fontFamily, lineColor, erro
         </button>
       </div>
       {error && <div className="text-red-500 p-4 ml-8">{error}</div>}
-      <div ref={mermaidRef} className="w-full h-full flex items-center justify-center border rounded shadow-inner ml-8"></div>
+      <div id="mermaid-diagram" ref={mermaidRef} className="w-full h-full flex items-center justify-center border rounded shadow-inner ml-8"></div>
     </div>
   );
 };
