@@ -15,30 +15,35 @@ const MermaidRenderer = () => {
   const [isLeftPanelCollapsed, setIsLeftPanelCollapsed] = useState(false);
   const [leftPanelWidth, setLeftPanelWidth] = useState(25);
 
-  const handleDownload = (format) => {
+  const handleDownload = async (format) => {
     try {
-      const svgElement = document.querySelector('#mermaid-diagram svg');
+      const svgElement = document.querySelector('.mermaid svg');
+      if (!svgElement) {
+        throw new Error('SVG element not found');
+      }
+
+      const svgData = new XMLSerializer().serializeToString(svgElement);
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+
       if (format === 'svg') {
-        const svgData = new XMLSerializer().serializeToString(svgElement);
-        const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-        downloadBlob(blob, 'mermaid-diagram.svg');
+        downloadBlob(svgBlob, 'mermaid-diagram.svg');
       } else if (format === 'png') {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
         const img = new Image();
         img.onload = () => {
+          const canvas = document.createElement('canvas');
           canvas.width = img.width;
           canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0);
           canvas.toBlob((blob) => {
             downloadBlob(blob, 'mermaid-diagram.png');
-          });
+          }, 'image/png');
         };
-        img.src = 'data:image/svg+xml;base64,' + btoa(new XMLSerializer().serializeToString(svgElement));
+        img.src = URL.createObjectURL(svgBlob);
       }
     } catch (error) {
       console.error('Error downloading diagram:', error);
-      setError('Error downloading diagram. Please try again.');
+      setError(`Error downloading diagram: ${error.message}`);
     }
   };
 
@@ -47,9 +52,7 @@ const MermaidRenderer = () => {
     const link = document.createElement('a');
     link.href = url;
     link.download = fileName;
-    document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
 
