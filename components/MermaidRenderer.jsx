@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import DiagramRenderer from './DiagramRenderer';
 import DiagramControls from './DiagramControls';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faDiagram } from '@fortawesome/free-solid-svg-icons';
 
 const MermaidRenderer = () => {
     const [diagram, setDiagram] = useState(`graph TD
@@ -90,8 +92,31 @@ const MermaidRenderer = () => {
         />
       </main>
 
-      <footer className="bg-gray-200 p-1 text-center text-xs">
-        <p>Mermaid Visualizer</p>
+      <footer className="bg-gray-200 p-2 text-center text-xs flex items-center justify-center space-x-4">
+        <span className="flex items-center">
+          <FontAwesomeIcon icon={faDiagram} className="mr-1" />
+          Mermaid Visualizer
+        </span>
+        <span>|</span>
+        <a
+          href="https://github.com/mermaid-js/mermaid"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline flex items-center"
+        >
+          <FontAwesomeIcon icon={faGithub} className="mr-1" />
+          Mermaid on GitHub
+        </a>
+        <span>|</span>
+        <a
+          href="https://github.com/killerapp"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline flex items-center"
+        >
+          <FontAwesomeIcon icon={faGithub} className="mr-1" />
+          Developer's GitHub
+        </a>
       </footer>
     </div>
   );
