@@ -35,13 +35,13 @@ const MermaidRenderer = () => {
           canvas.height = img.height;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0);
-          canvas.toBlob((blob) => {
-            if (blob) {
-              downloadBlob(blob, 'mermaid-diagram.png');
-            } else {
-              throw new Error('Failed to create PNG blob');
-            }
-          }, 'image/png');
+          
+          // Instead of using toBlob, we'll use toDataURL
+          const pngData = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          link.href = pngData;
+          link.download = 'mermaid-diagram.png';
+          link.click();
         };
         img.onerror = () => {
           throw new Error('Failed to load SVG as image');
