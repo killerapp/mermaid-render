@@ -44,12 +44,12 @@ const MermaidRenderer = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="bg-blue-600 text-white p-4">
-        <h1 className="text-2xl font-bold">📊 Mermaid Visualizer</h1>
+    <div className="flex flex-col h-screen">
+      <header className="bg-blue-600 text-white p-2">
+        <h1 className="text-xl font-bold">📊 Mermaid Visualizer</h1>
       </header>
 
-      <main className="flex-grow flex">
+      <main className="flex flex-grow overflow-hidden">
         <DiagramControls
           diagram={diagram}
           setDiagram={setDiagram}
@@ -90,8 +90,8 @@ const MermaidRenderer = () => {
         />
       </main>
 
-      <footer className="bg-gray-200 p-4 text-center">
-        <p>&copy; 2024 Agentic Insights, LLC. All rights reserved.</p>
+      <footer className="bg-gray-200 p-1 text-center text-xs">
+        <p>Mermaid Visualizer</p>
       </footer>
     </div>
   );
