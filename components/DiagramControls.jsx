@@ -127,18 +127,12 @@ const DiagramControls = ({
           </div>
           <div className="mb-2">
             <label className="block text-sm font-medium mb-1">Download</label>
-            <div className="flex space-x-2">
+            <div>
               <button
                 onClick={() => handleDownload('svg')}
-                className="flex-1 p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
               >
-                SVG
-              </button>
-              <button
-                onClick={() => handleDownload('png')}
-                className="flex-1 p-2 bg-green-500 text-white rounded hover:bg-green-600"
-              >
-                PNG
+                Download as SVG
               </button>
             </div>
           </div>

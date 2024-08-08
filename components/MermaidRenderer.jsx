@@ -15,7 +15,7 @@ const MermaidRenderer = () => {
   const [isLeftPanelCollapsed, setIsLeftPanelCollapsed] = useState(false);
   const [leftPanelWidth, setLeftPanelWidth] = useState(25);
 
-  const handleDownload = async (format) => {
+  const handleDownload = () => {
     try {
       const svgElement = document.querySelector('#mermaid-diagram svg');
       if (!svgElement) {
@@ -24,43 +24,17 @@ const MermaidRenderer = () => {
 
       const svgData = new XMLSerializer().serializeToString(svgElement);
       const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-
-      if (format === 'svg') {
-        downloadBlob(svgBlob, 'mermaid-diagram.svg');
-      } else if (format === 'png') {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
-          
-          // Instead of using toBlob, we'll use toDataURL
-          const pngData = canvas.toDataURL('image/png');
-          const link = document.createElement('a');
-          link.href = pngData;
-          link.download = 'mermaid-diagram.png';
-          link.click();
-        };
-        img.onerror = () => {
-          throw new Error('Failed to load SVG as image');
-        };
-        img.src = URL.createObjectURL(svgBlob);
-      }
+      
+      const url = URL.createObjectURL(svgBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'mermaid-diagram.svg';
+      link.click();
+      URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Error downloading diagram:', error);
       setError(`Error downloading diagram: ${error.message}`);
     }
-  };
-
-  const downloadBlob = (blob, fileName) => {
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;
-    link.click();
-    URL.revokeObjectURL(url);
   };
 
   const handleResize = (e) => {
