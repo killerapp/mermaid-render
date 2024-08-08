@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const DiagramControls = ({
   diagram,
@@ -15,6 +15,7 @@ const DiagramControls = ({
   isLeftPanelCollapsed,
   leftPanelWidth,
 }) => {
+  const [isEditorExpanded, setIsEditorExpanded] = useState(false);
   const diagramsWithoutFontSize = ['sequence', 'state', 'er', 'journey'];
 
   const fonts = [
@@ -28,20 +29,45 @@ const DiagramControls = ({
     { name: 'Garamond', value: 'garamond' },
   ];
 
+  const handleEditorFocus = () => {
+    setIsEditorExpanded(true);
+  };
+
+  const handleEditorBlur = () => {
+    setIsEditorExpanded(false);
+  };
+
   return (
     <div
       className={`bg-gray-100 overflow-y-auto transition-all duration-300 ease-in-out ${
         isLeftPanelCollapsed ? 'w-0' : ''
-      }`}
-      style={{ width: isLeftPanelCollapsed ? '0' : `${leftPanelWidth}%` }}
+      } ${isEditorExpanded ? 'z-10' : ''}`}
+      style={{
+        width: isLeftPanelCollapsed ? '0' : isEditorExpanded ? '66.67%' : `${leftPanelWidth}%`,
+        position: isEditorExpanded ? 'absolute' : 'relative',
+        height: isEditorExpanded ? '100%' : 'auto',
+      }}
     >
       <div className="p-4">
-        <textarea
-          value={diagram}
-          onChange={(e) => setDiagram(e.target.value)}
-          className="w-full h-64 p-2 border rounded mb-4 text-sm"
-          placeholder="Enter your Mermaid diagram code here..."
-        />
+        <div className="relative">
+          <textarea
+            value={diagram}
+            onChange={(e) => setDiagram(e.target.value)}
+            onFocus={handleEditorFocus}
+            className={`w-full p-2 border rounded mb-4 text-sm transition-all duration-300 ease-in-out ${
+              isEditorExpanded ? 'h-[calc(100vh-200px)]' : 'h-64'
+            }`}
+            placeholder="Enter your Mermaid diagram code here..."
+          />
+          {isEditorExpanded && (
+            <button
+              onClick={handleEditorBlur}
+              className="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 rounded"
+            >
+              Done
+            </button>
+          )}
+        </div>
         <div className="space-y-2">
           <div>
             <label className="block text-sm font-medium mb-1">Theme</label>
