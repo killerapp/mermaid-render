@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import mermaid from 'mermaid';
+import React, { useState } from 'react';
+import { mermaidVersion } from '../utils/mermaidVersion';
 
 const DiagramControls = ({
   diagram,
@@ -18,12 +18,7 @@ const DiagramControls = ({
 }) => {
   const [isEditorExpanded, setIsEditorExpanded] = useState(false);
   const [jsonTheme, setJsonTheme] = useState('');
-  const [mermaidVersion, setMermaidVersion] = useState('');
   const diagramsWithoutFontSize = ['sequence', 'state', 'er', 'journey'];
-
-  useEffect(() => {
-    setMermaidVersion(mermaid.version());
-  }, []);
 
   const diagramTypes = [
     { name: 'Flowchart', description: 'Diagrams to describe processes and workflows' },
