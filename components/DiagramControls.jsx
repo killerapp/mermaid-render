@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import mermaid from 'mermaid';
 
 const DiagramControls = ({
   diagram,
@@ -17,7 +18,25 @@ const DiagramControls = ({
 }) => {
   const [isEditorExpanded, setIsEditorExpanded] = useState(false);
   const [jsonTheme, setJsonTheme] = useState('');
+  const [mermaidVersion, setMermaidVersion] = useState('');
   const diagramsWithoutFontSize = ['sequence', 'state', 'er', 'journey'];
+
+  useEffect(() => {
+    setMermaidVersion(mermaid.version());
+  }, []);
+
+  const diagramTypes = [
+    { name: 'Flowchart', description: 'Diagrams to describe processes and workflows' },
+    { name: 'Sequence', description: 'Diagrams to show interactions between objects' },
+    { name: 'Gantt', description: 'Charts for project scheduling and timeline visualization' },
+    { name: 'Class', description: 'Diagrams to illustrate the structure of classes in OOP' },
+    { name: 'State', description: 'Diagrams to describe state machines and transitions' },
+    { name: 'ER', description: 'Entity Relationship Diagrams for database design' },
+    { name: 'User Journey', description: 'Maps to visualize user interactions with a system' },
+    { name: 'Pie', description: 'Simple pie charts for data visualization' },
+    { name: 'Requirement', description: 'Diagrams to document system requirements' },
+    { name: 'Gitgraph', description: 'Diagrams to visualize Git branching and merging' },
+  ];
 
   const fonts = [
     { name: 'Arial', value: 'arial' },
@@ -162,6 +181,19 @@ const DiagramControls = ({
             </div>
           </div>
         </div>
+      </div>
+      <div className="mt-4 p-4 bg-gray-200 rounded">
+        <h3 className="text-lg font-semibold mb-2">Supported Diagram Types</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          {diagramTypes.map((type, index) => (
+            <li key={index}>
+              <span className="font-medium">{type.name}:</span> {type.description}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-4">
+          <span className="font-medium">Mermaid Version:</span> {mermaidVersion}
+        </p>
       </div>
     </div>
   );
