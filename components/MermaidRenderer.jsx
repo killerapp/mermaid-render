@@ -8,6 +8,7 @@ const MermaidRenderer = () => {
         B --> C[Server1]
         B --> D[Server2]`);
   const [theme, setTheme] = useState('default');
+  const [customTheme, setCustomTheme] = useState(null);
   const [fontSize, setFontSize] = useState(14);
   const [fontFamily, setFontFamily] = useState('arial');
   const [lineColor, setLineColor] = useState('#000000');

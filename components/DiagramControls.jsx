@@ -16,6 +16,7 @@ const DiagramControls = ({
   leftPanelWidth,
 }) => {
   const [isEditorExpanded, setIsEditorExpanded] = useState(false);
+  const [jsonTheme, setJsonTheme] = useState('');
   const diagramsWithoutFontSize = ['sequence', 'state', 'er', 'journey'];
 
   const fonts = [
@@ -35,6 +36,16 @@ const DiagramControls = ({
 
   const handleEditorBlur = () => {
     setIsEditorExpanded(false);
+  };
+
+  const handleJsonThemeChange = (e) => {
+    setJsonTheme(e.target.value);
+    try {
+      const parsedTheme = JSON.parse(e.target.value);
+      setTheme(parsedTheme);
+    } catch (error) {
+      console.error('Invalid JSON theme:', error);
+    }
   };
 
   return (
@@ -72,35 +83,58 @@ const DiagramControls = ({
           <div>
             <label className="block text-sm font-medium mb-1">Theme</label>
             <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value)}
+              value={typeof theme === 'string' ? theme : 'custom'}
+              onChange={(e) => e.target.value !== 'custom' && setTheme(e.target.value)}
               className="w-full p-1 border rounded text-sm"
             >
               <option value="default">Default</option>
               <option value="forest">Forest</option>
               <option value="dark">Dark</option>
               <option value="neutral">Neutral</option>
+              <option value="custom">Custom (JSON)</option>
             </select>
           </div>
-          <div>
-            <label className={`block text-sm font-medium mb-1 ${diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type)) ? 'text-gray-400' : ''}`}>
-              Font Size (px)
-              <span
-                className="ml-1 cursor-help"
-                title="Sometimes the font size doesn't work as expected. This is due to limitations in Mermaid's rendering engine. If you encounter issues, try adjusting other settings or refreshing the diagram."
-              >
-                ❓
-              </span>
-            </label>
-            <input
-              type="number"
-              value={fontSize}
-              onChange={(e) => setFontSize(Number(e.target.value))}
-              min="8"
-              max="30"
-              className={`w-full p-1 border rounded text-sm ${diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type)) ? 'bg-gray-200 cursor-not-allowed' : ''}`}
-              disabled={diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type))}
-            />
+          {(typeof theme !== 'string' || theme === 'custom') && (
+            <div>
+              <label className="block text-sm font-medium mb-1">Custom Theme (JSON)</label>
+              <textarea
+                value={jsonTheme}
+                onChange={handleJsonThemeChange}
+                className="w-full p-2 border rounded mb-2 text-sm h-32"
+                placeholder="Enter custom theme JSON here..."
+              />
+            </div>
+          )}
+          <div className="flex items-center space-x-2">
+            <div className="flex-grow">
+              <label className={`block text-sm font-medium mb-1 ${diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type)) ? 'text-gray-400' : ''}`}>
+                Font Size (px)
+                <span
+                  className="ml-1 cursor-help"
+                  title="Sometimes the font size doesn't work as expected. This is due to limitations in Mermaid's rendering engine. If you encounter issues, try adjusting other settings or refreshing the diagram."
+                >
+                  ❓
+                </span>
+              </label>
+              <input
+                type="number"
+                value={fontSize}
+                onChange={(e) => setFontSize(Number(e.target.value))}
+                min="8"
+                max="30"
+                className={`w-full p-1 border rounded text-sm ${diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type)) ? 'bg-gray-200 cursor-not-allowed' : ''}`}
+                disabled={diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type))}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Line Color</label>
+              <input
+                type="color"
+                value={lineColor}
+                onChange={(e) => setLineColor(e.target.value)}
+                className="w-8 h-8"
+              />
+            </div>
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Font Family</label>
@@ -115,15 +149,6 @@ const DiagramControls = ({
                 </option>
               ))}
             </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Line Color</label>
-            <input
-              type="color"
-              value={lineColor}
-              onChange={(e) => setLineColor(e.target.value)}
-              className="w-full"
-            />
           </div>
           <div className="mb-2">
             <label className="block text-sm font-medium mb-1">Download</label>
