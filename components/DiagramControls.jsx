@@ -177,16 +177,18 @@ const DiagramControls = ({
           </div>
         </div>
       </div>
-      <div className="mt-4 p-4 bg-gray-200 rounded">
-        <h3 className="text-lg font-semibold mb-2">Supported Diagram Types</h3>
-        <ul className="list-disc pl-5 space-y-1">
-          {diagramTypes.map((type, index) => (
-            <li key={index}>
-              <span className="font-medium">{type.name}:</span> {type.description}
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4">
+      <div className="mt-5 p-4 bg-blue-200 rounded">
+        <h3 className="text-md font-semibold mb-2">Supported Diagram Types</h3>
+        <div className="max-h-40 overflow-y-auto">
+          <ul className="list-disc pl-5 space-y-1 text-sm">
+            {diagramTypes.map((type, index) => (
+              <li key={index}>
+                <span className="font-medium">{type.name}:</span> {type.description}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <p className="mt-2 text-xs">
           <span className="font-medium">Mermaid Version:</span> {mermaidVersion}
         </p>
       </div>

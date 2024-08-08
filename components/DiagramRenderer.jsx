@@ -8,13 +8,17 @@ const DiagramRenderer = ({ diagram, theme, fontSize, fontFamily, lineColor, erro
   useEffect(() => {
     mermaid.initialize({
       startOnLoad: false,
-      theme: theme,
-      themeVariables: {
+      theme: typeof theme === 'string' ? theme : 'base',
+      themeVariables: typeof theme === 'object' ? theme : {
         fontSize: `${fontSize}px`,
         fontFamily: fontFamily,
         lineColor: lineColor,
       },
     });
+
+    if (typeof theme === 'object') {
+      mermaid.setTheme(theme);
+    }
 
     const renderDiagram = async () => {
       if (!mermaidRef.current) return;
