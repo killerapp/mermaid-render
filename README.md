@@ -2,6 +2,12 @@
 
 This project showcases the integration of modern web technologies to create an interactive diagram maker application.
 
+🌐 **Demo:** [https://killerapp.github.io/mermaid-render/](https://killerapp.github.io/mermaid-render/)
+
+## 📸 Screenshot
+
+![Mermaid Diagram Viewer Screenshot](screenshot.png)
+
 ## 🚀 Technologies and Concepts Demonstrated
 
 1. **Next.js** 🔄: React framework for server-side rendering and static site generation
