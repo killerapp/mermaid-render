@@ -1,4 +1,4 @@
-# 📊 Diagram Maker Project
+# 📊 Mermaid Diagram Viewer
 
 This project showcases the integration of modern web technologies to create an interactive diagram maker application.
 
@@ -31,5 +31,3 @@ This project showcases the integration of modern web technologies to create an i
 - PostCSS and Tailwind CSS configuration
 
 This project demonstrates the integration of various modern web technologies to create a functional and interactive diagram maker application.
-
-[Note to editor: Please review and adjust the component descriptions if necessary.]
