@@ -6,7 +6,7 @@ This project showcases the integration of modern web technologies to create an i
 
 ## 📸 Screenshot
 
-![Mermaid Diagram Viewer Screenshot](screenshot.png)
+<img src="screenshot.png" alt="Mermaid Diagram Viewer Screenshot" width="600" />
 
 ## 🚀 Technologies and Concepts Demonstrated
 
