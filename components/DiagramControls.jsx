@@ -17,7 +17,6 @@ const DiagramControls = ({
   leftPanelWidth,
 }) => {
   const [isEditorExpanded, setIsEditorExpanded] = useState(false);
-  const [jsonTheme, setJsonTheme] = useState('');
   const diagramsWithoutFontSize = ['sequence', 'state', 'er', 'journey'];
 
   const diagramTypes = [
@@ -52,15 +51,6 @@ const DiagramControls = ({
     setIsEditorExpanded(false);
   };
 
-  const handleJsonThemeChange = (e) => {
-    setJsonTheme(e.target.value);
-    try {
-      const parsedTheme = JSON.parse(e.target.value);
-      setTheme(parsedTheme);
-    } catch (error) {
-      console.error('Invalid JSON theme:', error);
-    }
-  };
 
   return (
     <div
@@ -98,28 +88,16 @@ const DiagramControls = ({
           <div>
             <label className="block text-sm font-medium mb-1">Theme</label>
             <select
-              value={typeof theme === 'string' ? theme : 'custom'}
-              onChange={(e) => e.target.value !== 'custom' && setTheme(e.target.value)}
+              value={theme}
+              onChange={(e) => setTheme(e.target.value)}
               className="w-full p-1 border rounded text-sm"
             >
               <option value="default">Default</option>
               <option value="forest">Forest</option>
               <option value="dark">Dark</option>
               <option value="neutral">Neutral</option>
-              <option value="custom">Custom (JSON)</option>
             </select>
           </div>
-          {(typeof theme !== 'string' || theme === 'custom') && (
-            <div>
-              <label className="block text-sm font-medium mb-1">Custom Theme (JSON)</label>
-              <textarea
-                value={jsonTheme}
-                onChange={handleJsonThemeChange}
-                className="w-full p-2 border rounded mb-2 text-sm h-32 font-mono bg-gray-50"
-                placeholder="Enter custom theme JSON here..."
-              />
-            </div>
-          )}
           <div className="flex items-center space-x-2">
             <div className="flex-grow">
               <label className={`block text-sm font-medium mb-1 ${diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type)) ? 'text-gray-400' : ''}`}>
