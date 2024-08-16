@@ -73,7 +73,8 @@ const DiagramControls = ({
         height: isEditorExpanded ? '100%' : 'auto',
       }}
     >
-      <div className="p-4">
+      <div className="p-4 space-y-4">
+        <h2 className="text-xl font-bold mb-4">Diagram Controls</h2>
         <div className="relative">
           <textarea
             value={diagram}
@@ -114,7 +115,7 @@ const DiagramControls = ({
               <textarea
                 value={jsonTheme}
                 onChange={handleJsonThemeChange}
-                className="w-full p-2 border rounded mb-2 text-sm h-32"
+                className="w-full p-2 border rounded mb-2 text-sm h-32 font-mono bg-gray-50"
                 placeholder="Enter custom theme JSON here..."
               />
             </div>
@@ -164,20 +165,23 @@ const DiagramControls = ({
               ))}
             </select>
           </div>
-          <div className="mb-2">
-            <label className="block text-sm font-medium mb-1">Download</label>
+          <div className="mb-2 pt-4 border-t border-gray-300">
+            <label className="block text-sm font-medium mb-2">Download</label>
             <div>
               <button
                 onClick={() => handleDownload('svg')}
-                className="w-full p-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                className="w-full p-2 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300 ease-in-out flex items-center justify-center"
               >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
                 Download as SVG
               </button>
             </div>
           </div>
         </div>
       </div>
-      <div className="mt-5 p-4 bg-blue-200 rounded">
+      <div className="mt-5 p-4 bg-blue-100 rounded shadow-inner">
         <h3 className="text-md font-semibold mb-2">Supported Diagram Types</h3>
         <div className="max-h-40 overflow-y-auto">
           <ul className="list-disc pl-5 space-y-1 text-sm">
