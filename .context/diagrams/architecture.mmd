@@ -1,0 +1,30 @@
+graph TD
+    subgraph Client
+        UI[User Interface]
+        Controls[DiagramControls]
+        Renderer[DiagramRenderer]
+        MermaidCore[MermaidRenderer Core]
+    end
+
+    subgraph Components
+        UI --> Controls
+        UI --> Renderer
+        Controls --> MermaidCore
+        Renderer --> MermaidCore
+    end
+
+    subgraph Features
+        MermaidCore --> ThemeEngine[Theme Engine]
+        MermaidCore --> DiagramEngine[Diagram Engine]
+        MermaidCore --> ExportEngine[Export Engine]
+    end
+
+    subgraph External
+        DiagramEngine --> MermaidJS[Mermaid.js Library]
+        ExportEngine --> SVGExport[SVG Export]
+    end
+
+    style Client fill:#f9f9f9,stroke:#666
+    style Components fill:#e1f5fe,stroke:#666
+    style Features fill:#e8f5e9,stroke:#666
+    style External fill:#fff3e0,stroke:#666

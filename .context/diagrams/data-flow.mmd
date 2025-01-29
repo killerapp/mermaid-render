@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant User
+    participant Controls as DiagramControls
+    participant Core as MermaidRenderer
+    participant Engine as DiagramRenderer
+    participant Mermaid as Mermaid.js
+
+    User->>Controls: Input diagram code
+    Controls->>Core: Update diagram state
+    Core->>Engine: Render request
+    Engine->>Mermaid: Initialize with config
+    Mermaid-->>Engine: Return SVG
+    Engine-->>Core: Update DOM
+    Core-->>Controls: Update UI state
+    Controls-->>User: Show rendered diagram
+
+    Note over Controls,Engine: Theme, font, and color<br/>settings flow similarly
+
+    User->>Controls: Request SVG download
+    Controls->>Engine: Get SVG element
+    Engine-->>Controls: Return SVG data
+    Controls->>User: Download SVG file
