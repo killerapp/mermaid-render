@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import DiagramRenderer from './DiagramRenderer';
 import DiagramControls from './DiagramControls';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faDiagram } from '@fortawesome/free-solid-svg-icons';
+import { faChartBar } from '@fortawesome/free-solid-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 const MermaidRenderer = () => {
     const [diagram, setDiagram] = useState(`graph TD
@@ -94,7 +95,7 @@ const MermaidRenderer = () => {
 
       <footer className="bg-gray-200 p-2 text-center text-xs flex items-center justify-center space-x-4">
         <span className="flex items-center">
-          <FontAwesomeIcon icon={faDiagram} className="mr-1" />
+          <FontAwesomeIcon icon={faChartBar} className="mr-1" />
           Mermaid Visualizer
         </span>
         <span>|</span>
