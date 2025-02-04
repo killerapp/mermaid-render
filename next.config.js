@@ -1,6 +1,5 @@
 const nextConfig = {
     reactStrictMode: true,
-    swcMinify: true,
     // Cloudflare specific configuration
     webpack: (config, { isServer }) => {
       if (!isServer) {
