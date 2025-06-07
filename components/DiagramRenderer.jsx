@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mermaid from 'mermaid';
+import { Button } from "@/components/ui/button";
 
 const DiagramRenderer = ({ diagram, theme, fontSize, fontFamily, lineColor, error, setError, isLeftPanelCollapsed, setIsLeftPanelCollapsed }) => {
   const mermaidRef = useRef(null);
@@ -52,12 +53,14 @@ const DiagramRenderer = ({ diagram, theme, fontSize, fontFamily, lineColor, erro
   return (
     <div className="flex-grow bg-white relative">
       <div className="absolute top-0 left-0 bottom-0 w-8 bg-gray-100 flex items-center justify-center">
-        <button
-          className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        <Button
+          variant="outline"
+          size="icon"
+          className="rounded-full" // Keep rounded-full for the specific circular style desired here
           onClick={() => setIsLeftPanelCollapsed(!isLeftPanelCollapsed)}
         >
           {isLeftPanelCollapsed ? '→' : '←'}
-        </button>
+        </Button>
       </div>
       {error && <div className="text-red-500 p-4 ml-8">{error}</div>}
       <div id="mermaid-diagram" ref={mermaidRef} className="w-full h-full flex items-center justify-center border rounded shadow-inner ml-8"></div>

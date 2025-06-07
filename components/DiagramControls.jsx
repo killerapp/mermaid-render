@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { mermaidVersion } from '../utils/mermaidVersion';
 
 const DiagramControls = ({
@@ -66,95 +72,105 @@ const DiagramControls = ({
       <div className="p-4 space-y-4">
         <h2 className="text-xl font-bold mb-4">Diagram Controls</h2>
         <div className="relative">
-          <textarea
+          <Textarea
             value={diagram}
             onChange={(e) => setDiagram(e.target.value)}
             onFocus={handleEditorFocus}
-            className={`w-full p-2 border rounded mb-4 text-sm transition-all duration-300 ease-in-out ${
+            className={`w-full p-2 mb-4 text-sm transition-all duration-300 ease-in-out ${
               isEditorExpanded ? 'h-[calc(100vh-200px)]' : 'h-64'
             }`}
             placeholder="Enter your Mermaid diagram code here..."
           />
           {isEditorExpanded && (
-            <button
+            <Button
               onClick={handleEditorBlur}
-              className="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 rounded"
+              variant="outline"
+              size="sm"
+              className="absolute top-3 right-3" // Adjusted position slightly for shadcn Button
             >
               Done
-            </button>
+            </Button>
           )}
         </div>
         <div className="space-y-2">
           <div>
-            <label className="block text-sm font-medium mb-1">Theme</label>
-            <select
-              value={theme}
-              onChange={(e) => setTheme(e.target.value)}
-              className="w-full p-1 border rounded text-sm"
-            >
-              <option value="default">Default</option>
-              <option value="forest">Forest</option>
-              <option value="dark">Dark</option>
-              <option value="neutral">Neutral</option>
-            </select>
+            <Label htmlFor="theme-select" className="block text-sm font-medium mb-1">Theme</Label>
+            <Select value={theme} onValueChange={setTheme} id="theme-select">
+              <SelectTrigger className="w-full p-1 text-sm">
+                <SelectValue placeholder="Select theme" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="default">Default</SelectItem>
+                <SelectItem value="forest">Forest</SelectItem>
+                <SelectItem value="dark">Dark</SelectItem>
+                <SelectItem value="neutral">Neutral</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex-grow">
-              <label className={`block text-sm font-medium mb-1 ${diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type)) ? 'text-gray-400' : ''}`}>
+              <Label htmlFor="font-size-input" className={`block text-sm font-medium mb-1 ${diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type)) ? 'text-gray-400' : ''}`}>
                 Font Size (px)
-                <span
-                  className="ml-1 cursor-help"
-                  title="Sometimes the font size doesn't work as expected. This is due to limitations in Mermaid's rendering engine. If you encounter issues, try adjusting other settings or refreshing the diagram."
-                >
-                  ❓
-                </span>
-              </label>
-              <input
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="ml-1 cursor-help">❓</span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Sometimes the font size doesn't work as expected. This is due to limitations in Mermaid's rendering engine. If you encounter issues, try adjusting other settings or refreshing the diagram.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </Label>
+              <Input
+                id="font-size-input"
                 type="number"
                 value={fontSize}
                 onChange={(e) => setFontSize(Number(e.target.value))}
                 min="8"
                 max="30"
-                className={`w-full p-1 border rounded text-sm ${diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type)) ? 'bg-gray-200 cursor-not-allowed' : ''}`}
+                className={`w-full p-1 text-sm ${diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type)) ? 'bg-muted cursor-not-allowed' : ''}`}
                 disabled={diagramsWithoutFontSize.some(type => diagram.trim().toLowerCase().startsWith(type))}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Line Color</label>
-              <input
+              <Label htmlFor="line-color-input" className="block text-sm font-medium mb-1">Line Color</Label>
+              <Input
+                id="line-color-input"
                 type="color"
                 value={lineColor}
                 onChange={(e) => setLineColor(e.target.value)}
-                className="w-8 h-8"
+                className="w-10 h-10 p-1" // Adjusted size for better clickability with shadcn Input
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Font Family</label>
-            <select
-              value={fontFamily}
-              onChange={(e) => setFontFamily(e.target.value)}
-              className="w-full p-1 border rounded text-sm"
-            >
-              {fonts.map((font) => (
-                <option key={font.value} value={font.value} style={{ fontFamily: font.value }}>
-                  {font.name}
-                </option>
-              ))}
-            </select>
+            <Label htmlFor="font-family-select" className="block text-sm font-medium mb-1">Font Family</Label>
+            <Select value={fontFamily} onValueChange={setFontFamily} id="font-family-select">
+              <SelectTrigger className="w-full p-1 text-sm">
+                <SelectValue placeholder="Select font family" />
+              </SelectTrigger>
+              <SelectContent>
+                {fonts.map((font) => (
+                  <SelectItem key={font.value} value={font.value} style={{ fontFamily: font.value }}>
+                    {font.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="mb-2 pt-4 border-t border-gray-300">
-            <label className="block text-sm font-medium mb-2">Download</label>
+            <Label className="block text-sm font-medium mb-2">Download</Label>
             <div>
-              <button
+              <Button
                 onClick={() => handleDownload('svg')}
-                className="w-full p-2 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300 ease-in-out flex items-center justify-center"
+                className="w-full p-2 flex items-center justify-center"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
                 Download as SVG
-              </button>
+              </Button>
             </div>
           </div>
         </div>
